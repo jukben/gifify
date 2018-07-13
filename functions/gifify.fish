@@ -1,14 +1,20 @@
 function gifify -d "gififi <input> <width> [optional]"
-    set command "docker run --rm -v $PWD:/data maxogden/gifify $argv[1] -o $argv[1].gif --resize $argv[2]:-1 $argv[3..-1]"
+    set command "docker run --rm -v $PWD:/data maxogden/gifify $argv[1] -o $argv[1].gif --resize $argv[2]:-1"
 
-    eval "echo '$command' | sh 2> /tmp/gifify"
+    set log "/tmp/gifify"
+
+    # should we spread arguments?
+    if test $argv[3] 
+        eval "echo '$command $argv[3..-1]' | sh 2> $log"
+    else
+        eval "echo '$command' | sh 2> $log"
+    end
 
     # Report success
     if test $status -eq 0
         echo (set_color green)"OK"
     else
-        set reason (head -1 /tmp/gifify)
+        set reason (head -1 $log)
         echo (set_color red)"Something went wrong: $reason!"
-        echo (set_color yellow)"$command"
     end
 end
