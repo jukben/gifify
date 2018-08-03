@@ -15,7 +15,7 @@ It's basically wrapper around https://github.com/maxogden/gifify-docker created 
 ## Usage
 
 ```fish
-Usage: gifify [input] [width] [options]
+Usage: gififi <input> [width=350] [optional]
 ```
 
 ```

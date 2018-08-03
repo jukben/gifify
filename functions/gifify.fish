@@ -1,6 +1,17 @@
-function gifify -d "gififi <input> <width> [optional]"
-    set command "docker run --rm -v $PWD:/data maxogden/gifify $argv[1] -o $argv[1].gif --resize $argv[2]:-1"
+function gifify -d "gififi <input> [width=350] [optional]"
+    if test -z $argv[1]
+        echo (set_color red)"You have to specify the input file"
+        return 0
+    end
 
+    if test $argv[2]
+        set width $argv[2]
+    else 
+        set width 350
+    end
+
+    set command "docker run --rm -v $PWD:/data maxogden/gifify $argv[1] -o $argv[1].gif --resize $width:-1"
+	
     set log "/tmp/gifify"
 
     # should we spread arguments?
@@ -15,6 +26,6 @@ function gifify -d "gififi <input> <width> [optional]"
         echo (set_color green)"OK"
     else
         set reason (head -1 $log)
-        echo (set_color red)"Something went wrong: $reason!"
+        echo (set_color red)"Something went wrong: $reason"
     end
 end
