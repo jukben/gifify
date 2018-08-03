@@ -4,13 +4,22 @@ function gifify -d "gififi <input> [width=350] [optional]"
         return 0
     end
 
+    set file $argv[1]
+
+    # does the file exist?
+    if not test -e $file 
+        echo (set_color red)"File doesn't exist"
+        return 1
+    end
+
+    # set the width
     if test $argv[2]
         set width $argv[2]
     else 
         set width 350
     end
 
-    set command "docker run --rm -v $PWD:/data maxogden/gifify $argv[1] -o $argv[1].gif --resize $width:-1"
+    set command "docker run --rm -v $PWD:/data maxogden/gifify $file -o $file.gif --resize $width:-1"
 	
     set log "/tmp/gifify"
 
