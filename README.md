@@ -5,7 +5,7 @@
 With [fisherman]
 
 ```
-fisher jukben/gifify
+fisher add jukben/gifify
 ```
 
 ## About
